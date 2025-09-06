@@ -1,0 +1,256 @@
+/* =========================================
+   Narrador Épico — components.css
+   Componentes reutilizables (UI Kit mínimo)
+   ========================================= */
+
+/* ---- Contenedores ---- */
+.card{
+  background: color-mix(in oklab, var(--panel) 95%, #000 5%);
+  border: 1px solid color-mix(in oklab, var(--panel) 70%, #fff 12%);
+  border-radius: 16px;
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.35),
+    inset 0 1px 0 rgba(255,255,255,.02);
+  backdrop-filter: saturate(120%) blur(2px);
+}
+
+.panel{
+  background: #0f1318;
+  border: 1px solid #2a3442;
+  border-radius: 12px;
+}
+
+/* ---- Badges / Chips ---- */
+.badge{
+  display:inline-flex; align-items:center; gap:.35rem;
+  padding:.18rem .55rem;
+  border-radius:999px;
+  font-size:.75rem; font-weight:600;
+  background:#1f2633; color:#9fb4ff;
+  border:1px solid #2a365e;
+  white-space:nowrap;
+}
+.chip{
+  display:inline-flex; align-items:center; gap:.4rem;
+  padding:.25rem .6rem; border-radius:999px;
+  font-size:.8rem; background:#0f1318; color:var(--text);
+  border:1px solid #2a3442;
+}
+.chip .dot{ width:.45rem; height:.45rem; border-radius:50%; background:var(--accent); }
+
+/* ---- Botones ---- */
+.btn{
+  --btn-bg: var(--accent);
+  --btn-fg: #081018;
+  --btn-bd: transparent;
+
+  display:inline-flex; align-items:center; justify-content:center;
+  gap:.5rem;
+  padding:.66rem .95rem;
+  border-radius:12px;
+  border:1px solid var(--btn-bd);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-weight:700; letter-spacing:.1px;
+  transition: transform .06s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease, opacity .2s ease;
+  will-change: transform;
+}
+.btn:hover{ transform: translateY(-1px); box-shadow: 0 10px 20px rgba(0,0,0,.25); }
+.btn:active{ transform: translateY(0); box-shadow:none; }
+.btn:disabled{ opacity:.55; cursor:not-allowed; transform:none; box-shadow:none; }
+
+.btn--secondary{
+  --btn-bg: #273142;
+  --btn-fg: #cdd9e5;
+  --btn-bd: #3a465a;
+}
+.btn--ghost{
+  --btn-bg: transparent;
+  --btn-fg: var(--text);
+  --btn-bd: #334154;
+  background: linear-gradient(#0f1318,#0f1318) padding-box,
+             linear-gradient(160deg,#334154,#202a38) border-box;
+}
+.btn--danger{
+  --btn-bg: #b6313c;
+  --btn-fg: #fff;
+}
+
+/* Estado “cargando”: añade un spinner a la derecha */
+.btn--loading{ position:relative; pointer-events:none; }
+.btn--loading::after{
+  content:""; width:1em; height:1em; margin-left:.25rem;
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,.45);
+  border-top-color: rgba(255,255,255,1);
+  animation: spin .6s linear infinite;
+}
+@keyframes spin{ to{ transform: rotate(360deg); } }
+
+/* Botón icónico cuadrado */
+.icon-btn{
+  width:36px; height:36px; display:inline-grid; place-items:center;
+  border-radius:10px; border:1px solid #334154; background:#0f1318; color:var(--text);
+}
+.icon-btn:hover{ border-color:#3f4b61; }
+
+/* ---- Campos de formulario ---- */
+.field{ display:grid; gap:.4rem; }
+.field > label{ font-size:.9rem; color: color-mix(in oklab, var(--text) 82%, #fff 0%); }
+.help{ font-size:.8rem; color: var(--muted); }
+
+.input, .select, .textarea{
+  width:100%;
+  padding:.7rem .85rem;
+  border-radius:12px;
+  background:#0f1318;
+  color:var(--text);
+  border:1px solid #2a3442;
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+.input:focus, .select:focus, .textarea:focus{
+  border-color: color-mix(in oklab, var(--accent) 70%, #2a3442 30%);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 20%, transparent 80%);
+}
+.textarea{ min-height: 180px; resize: vertical; }
+
+/* Select con flecha */
+.select{
+  appearance:none; -webkit-appearance:none; -moz-appearance:none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #8aa0c8 50%),
+    linear-gradient(135deg, #8aa0c8 50%, transparent 50%),
+    linear-gradient(#2a3442,#2a3442);
+  background-position:
+    calc(100% - 18px) calc(50% - 4px),
+    calc(100% - 12px) calc(50% - 4px),
+    calc(100% - 22px) 50%;
+  background-size: 6px 6px, 6px 6px, 1px 60%;
+  background-repeat: no-repeat;
+  padding-right: 36px;
+}
+
+/* Grupo de acciones (toolbar) */
+.toolbar{ display:flex; gap:.6rem; flex-wrap:wrap; align-items:center; }
+
+/* ---- Details / Accordion ---- */
+details{
+  background:#0f1318;
+  border:1px solid #2a3442;
+  border-radius:12px;
+  padding:.4rem .6rem;
+}
+details[open]{ border-color:#334154; }
+details > summary{
+  list-style:none; cursor:pointer;
+  padding:.6rem; border-radius:10px; color:var(--text); font-weight:600;
+}
+details > summary::-webkit-details-marker{ display:none; }
+details > summary::before{
+  content:"▸"; margin-right:.4rem; color:#8aa0c8; transition: transform .15s ease;
+}
+details[open] > summary::before{ transform: rotate(90deg); }
+
+/* ---- Alertas ---- */
+.alert{
+  display:flex; gap:.7rem; align-items:flex-start;
+  padding:.75rem .9rem; border-radius:12px;
+  border:1px solid #2a3442; background:#0f1318; color:var(--text);
+}
+.alert--info   { border-color:#2a365e; background: #0f141f; }
+.alert--success{ border-color:#2e5e3a; background: #0f1a14; }
+.alert--warn   { border-color:#6a5a2a; background: #1a1710; }
+.alert--danger { border-color:#6a2a2f; background: #1a0f12; }
+
+/* ---- Barra de progreso ---- */
+.progress{
+  height:8px; width:100%; border-radius:999px;
+  background:#0f1318; border:1px solid #2a3442; overflow:hidden;
+}
+.progress > .bar{
+  height:100%; width:0%;
+  background: linear-gradient(90deg, var(--accent), color-mix(in oklab, var(--accent) 50%, #fff 10%));
+  border-radius:999px;
+  transition: width .3s ease;
+}
+
+/* ---- Tooltip ultra simple ---- */
+[data-tooltip]{
+  position:relative;
+}
+[data-tooltip]::after{
+  content: attr(data-tooltip);
+  position:absolute; left:50%; bottom: calc(100% + 8px);
+  translate:-50% 0; white-space:nowrap;
+  background:#0f1318; color:var(--text);
+  border:1px solid #2a3442; border-radius:8px;
+  padding:.35rem .55rem; font-size:.78rem; opacity:0; pointer-events:none;
+  transition: opacity .15s ease, transform .15s ease;
+  transform: translateY(4px);
+}
+[data-tooltip]:hover::after{ opacity:1; transform: translateY(0); }
+
+/* ---- Modal (esqueleto) ---- */
+.modal-backdrop{
+  position:fixed; inset:0; background:rgba(0,0,0,.5);
+  display:none; place-items:center; z-index:40;
+}
+.modal{
+  width:min(720px, 92vw);
+  background: var(--panel);
+  border:1px solid color-mix(in oklab, var(--panel) 70%, #fff 12%);
+  border-radius:16px; padding:18px;
+  box-shadow: 0 30px 80px rgba(0,0,0,.45);
+}
+.modal-header{ display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+.modal-title{ font-size:1.15rem; font-weight:800; }
+.modal-actions{ display:flex; gap:.5rem; }
+.modal-body{ margin-top:.75rem; }
+
+/* ---- Skeleton loading ---- */
+.skeleton{
+  position:relative; overflow:hidden; background:#0f1318; border-radius:10px;
+}
+.skeleton::after{
+  content:""; position:absolute; inset:0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.06), transparent);
+  transform: translateX(-100%); animation: shimmer 1.2s infinite;
+}
+@keyframes shimmer{ to{ transform: translateX(100%); } }
+
+/* ---- Grid utilitario ---- */
+.grid{ display:grid; gap: .75rem; }
+.grid.cols-2{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+.grid.cols-3{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+@media (max-width: 720px){
+  .grid.cols-2, .grid.cols-3{ grid-template-columns: 1fr; }
+}
+
+/* ---- Tabs mínimos ---- */
+.tabs{ display:flex; gap:.35rem; flex-wrap:wrap; }
+.tab{
+  padding:.5rem .75rem; border-radius:10px; border:1px solid #2a3442; background:#0f1318; color:var(--text);
+}
+.tab[aria-selected="true"]{
+  border-color: color-mix(in oklab, var(--accent) 60%, #2a3442 40%);
+  background: color-mix(in oklab, var(--accent) 14%, #0f1318 86%);
+}
+
+/* ---- Tabla simple ---- */
+.table{
+  width:100%; border-collapse: collapse; font-size:.95rem;
+  border:1px solid #2a3442; border-radius:12px; overflow:hidden;
+}
+.table th, .table td{ padding:.6rem .7rem; border-bottom:1px solid #2a3442; }
+.table th{ text-align:left; color:var(--muted); font-weight:700; background:#0f141b; }
+
+/* ---- Toast (barra de estado superior) ---- */
+.toast{
+  position: fixed; top: 12px; left: 50%; translate: -50% 0;
+  background: #0f141b; color: var(--text);
+  border: 1px solid #2a3442; border-radius: 12px;
+  padding: .55rem .8rem; font-weight:600; z-index: 50;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+
+/* Fin de components.css */

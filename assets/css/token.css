@@ -1,0 +1,165 @@
+/* ===========================
+   Narrador Épico — tokens.css
+   Design tokens (colores, tipografía, espacio, radios, sombras, etc.)
+   =========================== */
+
+/* ---- Paleta base (modo oscuro por defecto) ---- */
+:root{
+  /* Colores neutrales */
+  --bg:        #0b0d10;   /* fondo general */
+  --panel:     #12161b;   /* paneles / tarjetas */
+  --surface:   #0f1318;   /* inputs / superficies internas */
+  --text:      #e6edf3;   /* texto principal */
+  --muted:     #93a1b1;   /* texto secundario / hint */
+
+  /* Acento */
+  --accent:    #7c9cff;   /* primario (interactivo y branding) */
+
+  /* Bordes / líneas */
+  --border-subtle: color-mix(in oklab, var(--panel) 82%, #ffffff 12%);
+  --border-strong: color-mix(in oklab, var(--panel) 65%, #ffffff 18%);
+
+  /* Estados semánticos */
+  --info:      #7c9cff;
+  --success:   #3dd68c;
+  --warn:      #f6c34a;
+  --danger:    #ef6a7b;
+
+  /* Sombras y overlays */
+  --shadow-0:  0 0 0 rgba(0,0,0,0);
+  --shadow-1:  0 6px 20px rgba(0,0,0,.25);
+  --shadow-2:  0 10px 30px rgba(0,0,0,.35);
+  --shadow-3:  0 30px 80px rgba(0,0,0,.45);
+  --overlay:   rgba(0,0,0,.5);
+
+  /* Tipografía */
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, Inter, Ubuntu, Arial, "Noto Sans", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+  --leading:   1.55;
+
+  /* Escala de tamaño de fuente */
+  --fs-300: 0.875rem;   /* 14px */
+  --fs-400: 1rem;       /* 16px */
+  --fs-500: 1.125rem;   /* 18px */
+  --fs-600: clamp(1.1rem, 1.2vw + .8rem, 1.35rem);
+  --fs-700: clamp(1.25rem, 1.6vw + .8rem, 1.5rem);
+  --fs-800: clamp(1.6rem, 2.2vw + 1rem, 2rem);
+
+  /* Espaciado (8-pt-ish) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 40px;
+
+  /* Radios */
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-pill: 999px;
+
+  /* Transiciones / motion */
+  --dur-fast:   120ms;
+  --dur:        200ms;
+  --dur-slow:   320ms;
+  --ease:       cubic-bezier(.2,.6,.2,1);
+  --ease-snap:  cubic-bezier(.2, .8, .2, 1);
+
+  /* Contenedor */
+  --container-max: 980px;
+}
+
+/* Accesibles derivados del acento (sombras y fondos) */
+:root{
+  --accent-weak:  color-mix(in oklab, var(--accent) 18%, #0b0d10 82%);
+  --accent-soft:  color-mix(in oklab, var(--accent) 26%, #0b0d10 74%);
+  --accent-bold:  color-mix(in oklab, var(--accent) 75%, #0b0d10 25%);
+  --accent-text:  color-mix(in oklab, var(--accent) 90%, #ffffff 10%);
+}
+
+/* Gradientes de branding sutiles (para headers / hero) */
+:root{
+  --grad-hero:
+    radial-gradient(1200px 420px at 10% -10%, color-mix(in oklab, var(--accent) 30%, transparent), transparent),
+    radial-gradient(900px 380px at 90% -20%, color-mix(in oklab, #00ffe0 16%, transparent), transparent);
+}
+
+/* ---- Temas de color (solo cambian el acento) ---- */
+:root[data-theme="emerald"]{ --accent:#10b981; }
+:root[data-theme="royal"]  { --accent:#8b5cf6; }
+:root[data-theme="crimson"]{ --accent:#ef4444; }
+:root[data-theme="amber"]  { --accent:#f59e0b; }
+:root[data-theme="cyber"]  { --accent:#00ffe0; }
+
+/* ---- Variante clara opcional (por atributo) ---- */
+:root[data-scheme="light"]{
+  --bg:      #f6f7fb;
+  --panel:   #ffffff;
+  --surface: #f9fafc;
+  --text:    #0f172a;
+  --muted:   #5b6472;
+
+  --border-subtle: color-mix(in oklab, var(--panel) 88%, #000000 8%);
+  --border-strong: color-mix(in oklab, var(--panel) 70%, #000000 18%);
+
+  --overlay: rgba(0,0,0,.35);
+
+  /* Ajuste de sombras para luz */
+  --shadow-1: 0 4px 14px rgba(2,6,23,.08);
+  --shadow-2: 0 10px 24px rgba(2,6,23,.12);
+  --shadow-3: 0 30px 60px rgba(2,6,23,.18);
+}
+
+/* ---- Variante clara automática por preferencia del SO (si no hay data-scheme) ---- */
+@media (prefers-color-scheme: light){
+  :root:not([data-scheme]){
+    --bg:      #f6f7fb;
+    --panel:   #ffffff;
+    --surface: #f9fafc;
+    --text:    #0f172a;
+    --muted:   #5b6472;
+
+    --border-subtle: color-mix(in oklab, var(--panel) 88%, #000000 8%);
+    --border-strong: color-mix(in oklab, var(--panel) 70%, #000000 18%);
+
+    --overlay: rgba(0,0,0,.35);
+
+    --shadow-1: 0 4px 14px rgba(2,6,23,.08);
+    --shadow-2: 0 10px 24px rgba(2,6,23,.12);
+    --shadow-3: 0 30px 60px rgba(2,6,23,.18);
+  }
+}
+
+/* ---- Z-index “escalera” ---- */
+:root{
+  --z-base: 1;
+  --z-sticky: 10;
+  --z-dropdown: 20;
+  --z-tooltip: 30;
+  --z-toast: 40;
+  --z-modal: 50;
+}
+
+/* ---- Tokens de componentes frecuentes ---- */
+:root{
+  /* Inputs */
+  --input-bg:      var(--surface);
+  --input-bd:      #2a3442;
+  --input-bd-focus: color-mix(in oklab, var(--accent) 70%, #2a3442 30%);
+  --input-shadow-focus: 0 0 0 3px color-mix(in oklab, var(--accent) 20%, transparent 80%);
+  --input-radius:  var(--radius-lg);
+  --input-pad:     10px 12px;
+
+  /* Botones */
+  --btn-radius:    var(--radius-lg);
+  --btn-pad:       .66rem .95rem;
+  --btn-shadow:    0 10px 20px rgba(0,0,0,.25);
+}
+
+/* Fin de tokens.css */

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Narrador Épico de Partidas — Demo local (LM Studio)</title>
+
+  <!-- Estilos (tokens → base → componentes → app) -->
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1 class="site-title">
+        Narrador Épico de Partidas
+        <span class="badge">Demo local</span>
+        <span id="langBadge" class="badge badge-muted"></span>
+      </h1>
+      <p class="lead">
+        Pegá tu bloque de movimientos <strong>PGN o FEN</strong> y disfrutá del relato. 
+        Funciona con tu <em>LM Studio</em> local (sin tarjetas, sin suscripciones).
+      </p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card card--panel">
+      <form class="stack" onsubmit="return false">
+        <!-- Entrada principal -->
+        <label for="pgn" class="label">PGN o FEN</label>
+        <textarea id="pgn" class="textarea" placeholder="Ej.: 1.e4 e5 2.Bc4 Nc6 3.Qh5 Nf6 4.Qxf7# 1-0  ·· o pegá tu PGN completo ·· o una FEN" spellcheck="false"></textarea>
+        <p class="hint">
+          La web ajusta automáticamente la <b>extensión e intensidad</b> del relato según la complejidad de la partida.
+        </p>
+
+        <!-- Preferencias de salida -->
+        <div class="grid grid-2 gap">
+          <div class="field">
+            <label for="style" class="label">Estilo de voz</label>
+            <select id="style" class="select">
+              <option value="testigo presencial íntimo" selected>Testigo presencial íntimo (recomendado)</option>
+              <option value="épica medieval intensa">Épica medieval intensa</option>
+              <option value="juglar de taberna">Juglar de taberna</option>
+              <option value="crónica cortesana">Crónica cortesana</option>
+              <option value="balada sombría">Balada sombría</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="words" class="label">Longitud (palabras)</label>
+            <input id="words" class="input" type="text" placeholder="auto" inputmode="numeric">
+            <p class="hint">Dejalo en <b>auto</b> para que el sistema decida (breve/mediana/larga) según la partida.</p>
+          </div>
+        </div>
+
+        <!-- Config avanzada (LM Studio) -->
+        <details class="details" id="advanced">
+          <summary class="details__summary">Configuración avanzada (LM Studio)</summary>
+          <div class="grid grid-3 gap">
+            <div class="field">
+              <label for="baseUrl" class="label">Base URL</label>
+              <input id="baseUrl" class="input" type="text" value="http://127.0.0.1:1234/v1" autocomplete="off">
+              <p class="hint">Asegurate que LM Studio esté <b>Running</b> y con <b>CORS ON</b>.</p>
+            </div>
+            <div class="field">
+              <label for="model" class="label">Modelo</label>
+              <input id="model" class="input" type="text" value="meta-llama-3.1-8b-instruct" autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="temp" class="label">Temperatura</label>
+              <input id="temp" class="input" type="number" value="0.8" step="0.1" min="0" max="2">
+            </div>
+            <div class="field">
+              <label for="topP" class="label">top_p</label>
+              <input id="topP" class="input" type="number" value="0.9" step="0.05" min="0" max="1">
+            </div>
+            <div class="field">
+              <label for="maxTok" class="label">Máx. tokens</label>
+              <input id="maxTok" class="input" type="number" value="1100" min="256" max="4000">
+            </div>
+          </div>
+        </details>
+
+        <!-- Acciones -->
+        <div class="actions">
+          <button id="btnGo" class="btn btn-primary" type="button">Generar relato</button>
+          <button id="btnRetry" class="btn" type="button" disabled>Re-generar limpio</button>
+          <button id="btnCopy" class="btn" type="button" disabled>Copiar</button>
+          <button id="btnSave" class="btn" type="button" disabled>Descargar .txt</button>
+        </div>
+
+        <!-- Estado / Salida -->
+        <div id="status" class="status" aria-live="polite"></div>
+        <div id="out" class="output" role="region" aria-live="polite"></div>
+
+        <!-- Ejemplo colapsable -->
+        <details class="details">
+          <summary class="details__summary">PGN de prueba (Immortal Game)</summary>
+          <textarea class="textarea textarea--mono" rows="8" readonly spellcheck="false">[Event "Immortal Game"]
+[Site "London"]
+[Date "1851.06.21"]
+[White "Adolf Anderssen"]
+[Black "Lionel Kieseritzky"]
+[Result "1-0"]
+1.e4 e5 2.f4 exf4 3.Bc4 Qh4+ 4.Kf1 b5 5.Bxb5 Nf6 6.Nf3 Qh6
+7.d3 Nh5 8.Nh4 Qg5 9.Nf5 c6 10.g4 Nf6 11.Rg1 cxb5 12.h4 Qg6
+13.h5 Qg5 14.Qf3 Ng8 15.Bxf4 Qf6 16.Nc3 Bc5 17.Nd5 Qxb2
+18.Bd6 Bxg1 19.e5 Qxa1+ 20.Ke2 Na6 21.Nxg7+ Kd8 22.Qf6+ Nxf6
+23.Be7# 1-0</textarea>
+        </details>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p class="muted">© Narrador Épico — Demo local con LM Studio</p>
+    </div>
+  </footer>
+
+  <noscript>
+    <div class="noscript">Necesitás activar JavaScript para generar los relatos.</div>
+  </noscript>
+
+  <!-- Lógica de la app -->
+  <script defer src="assets/js/app.js"></script>
+</body>
+</html>
